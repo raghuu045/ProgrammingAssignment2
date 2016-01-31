@@ -31,7 +31,7 @@ makeCacheMatrix <- function(x = matrix()) {
 }
 
 
-## cacheSolve function calculates the mean of the special "matrix" created 
+## cacheSolve function calculates the inverse of the special "matrix" created 
 ## with makeCacheMatrix function. However it checks to see if the inverse has
 ## already been calculated. If so, it gets the inverse from the cache and 
 ## skips the computation. Otherwise it calculates the inverse of the matrix 
@@ -48,3 +48,62 @@ cacheSolve <- function(x, ...) {
         x$setInv(inv)
         inv
 }
+
+## Usage: Example
+
+
+## Matrix supplied should be invertible
+## > x <- c(8,9,10,11)
+## > mat1 <- matrix(x,2,2)
+## > a <- makeCacheMatrix(mat1)
+## > a$get()
+##     [,1] [,2]
+##     [1,]    8   10
+##     [2,]    9   11
+## > a$getInv()
+## NULL
+## > cacheSolve(a)
+##     [,1] [,2]
+## [1,] -5.5    5
+## [2,]  4.5   -4
+## > cacheSolve(a)
+## getting cached inverse
+##      [,1] [,2]
+## [1,] -5.5    5
+## [2,]  4.5   -4
+## > a$getInv()
+##      [,1] [,2]
+## [1,] -5.5    5
+## [2,]  4.5   -4
+## > a$get()
+##      [,1] [,2]
+## [1,]    8   10
+## [2,]    9   11
+
+
+
+## Supplying a new invertible matrix
+## > y <- c(12,13,14,15)
+## > mat2 <- matrix(y,2,2)
+## > a$set(mat2)
+## > a$get()
+##      [,1] [,2]
+## [1,]   12   14
+## [2,]   13   15
+## > cacheSolve(a)
+##      [,1] [,2]
+## [1,] -7.5    7
+## [2,]  6.5   -6
+## > cacheSolve(a)
+## getting cached inverse
+##      [,1] [,2]
+## [1,] -7.5    7
+## [2,]  6.5   -6
+## > a$getInv()
+##      [,1] [,2]
+## [1,] -7.5    7
+## [2,]  6.5   -6
+## > a$get()
+##      [,1] [,2]
+## [1,]   12   14
+## [2,]   13   15
